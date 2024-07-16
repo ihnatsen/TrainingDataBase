@@ -134,6 +134,7 @@ Table: Training
 </table>
 
 <h2>Solution</h2>
+
 ```postgresql
 -- calculates the total number of seconds in the time value passed as the parameter t 
 -- and returns this value in the variable sum_.
@@ -145,6 +146,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 ```
+
 ```postgresql
 with d as(	
 Select 
