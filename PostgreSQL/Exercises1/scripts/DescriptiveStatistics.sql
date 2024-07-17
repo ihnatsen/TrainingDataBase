@@ -1,29 +1,5 @@
-Select round(avg(distance)::numeric, 2), time_of_year
-FROM (Select *, 1 as time_of_year
-      From Training
-      WHERE EXTRACT(month FROM data_training) in (12, 1, 2)
-
-      UNION ALL
-      Select *, 2 as time_of_year
-      From Training
-      WHERE EXTRACT(month FROM data_training) in (3, 4, 5)
-      UNION ALL
-
-      Select *, 3 as time_of_year
-      From Training
-      WHERE EXTRACT(month FROM data_training) in (6, 7, 8)
-      UNION ALL
-
-      Select *, 4 as time_of_year
-      From Training
-      WHERE EXTRACT(month FROM data_training) in (9, 10, 11))
-
-Group by time_of_year;
-
-
 -- category one:
-Select avg(distance)                                          as mean,
-       percentile_cont(0.25) WITHIN GROUP (ORDER BY distance) as Q1,
+Select percentile_cont(0.25) WITHIN GROUP (ORDER BY distance) as Q1,
        percentile_cont(0.5) WITHIN GROUP (ORDER BY distance)  as Q2,
        percentile_cont(0.75) WITHIN GROUP (ORDER BY distance) as Q3
 FROM training;
