@@ -1,7 +1,7 @@
 # This is a repository for practicing writing SQL queries on PostgreSQL. :keyboard:
 
 
-## Exercises one: Training join Weather.
+## Exercises one: Train join Weather.
   
 Table: Weather
 <table>
@@ -23,7 +23,7 @@ Table: Weather
 ID is the primary key (a column with unique values) for this table. 
 The table contains the temperature for each hour of each day.
 
-Table: Training
+Table: Train
 <table>
   <tr>
     <td><mark>Column_name</mark></td>
@@ -44,7 +44,7 @@ Table: Training
     <td>time</td>
     </tr>
       <tr>
-   <td>data_training</td>
+   <td>date_train</td>
     <td>timestamp</td>
     </tr>
 </table>
@@ -90,7 +90,7 @@ Table: Weather
 
 
 Input:
-Table: Training
+Table: Train
 <table>
 <tr>
 
@@ -98,7 +98,7 @@ Table: Training
 <td><mark>distance</mark></td>
 <td><mark>start_time</mark></td>
 <td><mark>end_time</mark></td>
-<td><mark>data_training</mark></td>
+<td><mark>date_train</mark></td>
 </tr>
 
 <tr>
@@ -153,7 +153,7 @@ Select
 	*,
 	get_sum_min(end_time) as delta_end,
 	end_time - start_time as delta
-	FROM training
+	FROM train
 	Where EXTRACT(HOUR FROM end_time) != EXTRACT(HOUR FROM start_time)),
 	
 weights as(	
@@ -164,36 +164,36 @@ Select *,
 
 first_page as(
 
-Select wg.id, wg.distance, wg.start_time, wg.end_time, wg.data_training,  
+Select wg.id, wg.distance, wg.start_time, wg.end_time, wg.data_train,  
 (lead(wt.temp) over())*wg.w_end  + wt.temp*wg.w_start as temp
 	from weights as wg  Join weather as wt
 ON (EXTRACT(HOUR from wg.start_time) = EXTRACT(HOUR from wt.datetime) AND
-	EXTRACT(year from wg.data_training) = EXTRACT(year from wt.datetime) AND
-	EXTRACT(month from wg.data_training) = EXTRACT(month from wt.datetime) AND
-	EXTRACT(day from wg.data_training) = EXTRACT(day from wt.datetime)
+	EXTRACT(year from wg.data_train) = EXTRACT(year from wt.datetime) AND
+	EXTRACT(month from wg.data_train) = EXTRACT(month from wt.datetime) AND
+	EXTRACT(day from wg.data_train) = EXTRACT(day from wt.datetime)
 	)),
 	
 
 dd as(	
 Select *
-	FROM training
+	FROM train
 	Where EXTRACT(HOUR FROM end_time) = EXTRACT(HOUR FROM start_time)),
 
 second_page as(
-Select wg.id, wg.distance, wg.start_time, wg.end_time, wg.data_training,  
+Select wg.id, wg.distance, wg.start_time, wg.end_time, wg.data_train,  
 	 wt.temp as temp
 	from dd as wg  Join weather as wt
 ON (EXTRACT(HOUR from wg.start_time) = EXTRACT(HOUR from wt.datetime) AND
-	EXTRACT(year from wg.data_training) = EXTRACT(year from wt.datetime) AND
-	EXTRACT(month from wg.data_training) = EXTRACT(month from wt.datetime) AND
-	EXTRACT(day from wg.data_training) = EXTRACT(day from wt.datetime)
+	EXTRACT(year from wg.data_train) = EXTRACT(year from wt.datetime) AND
+	EXTRACT(month from wg.data_train) = EXTRACT(month from wt.datetime) AND
+	EXTRACT(day from wg.data_train) = EXTRACT(day from wt.datetime)
 	))
 
 Select * FROM(
 SELECT * FROM first_page
 UNION ALL
 SELECT * FROM second_page)
-ORDER BY data_training, start_time 
+ORDER BY data_train, start_time 
 
 --  The last record has a null value because at the 'first_page' step, the sequence of 
 -- 	executing operators (starting from FROM then window function) does not allow obtaining a 
