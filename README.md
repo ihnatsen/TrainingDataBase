@@ -21,8 +21,7 @@ Table: Weather
     </tr>
 </table>
 ID is the primary key (a column with unique values) for this table. 
-The table contains the temperature for each hour of each day.
-
+The table contains the temperature for each hour of each day.<br/><br/>
 Table: Train
 <table>
   <tr>
@@ -49,12 +48,8 @@ Table: Train
     </tr>
 </table>
 id is the primary key (a column with unique values) for this table.
-Each row of this table contains information about the duration, date, start time, and finish time of the train.
+Each row of this table contains information about the duration, date, start time, and finish time of the train.<br/><br/>
 
-Write a solution to report the duration, date, start time, finish time trains and 
-<mark>weighted arithmetic mean temperature</mark>. 
-
-<em>Example:</em>
 Input:
 Table: Weather
 <table>
@@ -132,6 +127,10 @@ Table: Train
 <td>2023-04-03</td>
 </tr>
 </table>
+
+<h2>Task one</h2>
+Write a solution to report the duration, date, start time, finish time trains and 
+<mark>weighted arithmetic mean temperature</mark>. 
 
 <h2>Solution</h2>
 
