@@ -1,4 +1,4 @@
-# This is a repository for practicing writing SQL queries on PostgreSQL. :keyboard:
+# This is a repository for practicing writing SQL queries on PostgreSQL. It's concerned with the nuts and bolts of queries. :keyboard:
 
 
 ## Exercises one: Training join Weather.
